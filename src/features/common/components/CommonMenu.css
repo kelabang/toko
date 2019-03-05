@@ -1,0 +1,9 @@
+span.ant-badge.ant-badge-not-a-wrapper {
+    position: absolute;
+	top: 1px;
+	right: 15px;
+}
+
+.ant-tooltip-open.ant-menu-item-active .ant-tooltip-content{
+   display: none;
+}
