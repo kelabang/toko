@@ -11,6 +11,9 @@ const {
 	Content, Sider,
 } = Layout;
 
+/**
+ * Checkout route component.
+ */
 export default function Checkout () {
 	return (
 		<Layout style={{ minHeight: '100vh' }}>

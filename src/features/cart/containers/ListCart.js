@@ -1,8 +1,8 @@
-import React, {Component, Fragment} from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import numbro from 'numbro';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
 	List, Button, Spin, Alert
 } from 'antd';
@@ -13,9 +13,14 @@ import {
 	reset
 } from './../redux/cart.reducer';
 
+/**
+ * ListCart container.
+ * show all item in the cart
+ */
 class ListCart extends Component {
+	// format number to price with 2 decimal point
 	_formatToPrice = (price) => {
-		return numbro(price).formatCurrency({mantissa: 2});
+		return numbro(price).formatCurrency({ mantissa: 2 });
 	}
 	_renderContent = () => {
 		const {
@@ -92,10 +97,10 @@ class ListCart extends Component {
 		}
 		return error;
 	}
-	componentWillUnmount () {
-		this.props.reset();
+	componentWillUnmount() {
+		this.props.reset(); // reset err value
 	}
-	render () {
+	render() {
 		const {
 			loading,
 		} = this.props;
@@ -103,8 +108,8 @@ class ListCart extends Component {
 			<div style={{ marginTop: 14, padding: 24, background: '#fff', minHeight: 360 }}>
 				{this._renderError()}
 				{
-					loading? 
-						<Spin>{this._renderContent()}</Spin>:
+					loading ?
+						<Spin>{this._renderContent()}</Spin> : // lock the form with spinner if still processing
 						this._renderContent()
 				}
 			</div>
@@ -128,21 +133,28 @@ const mapStateToProps = state => {
 		cartReducer,
 	} = state;
 	const { err, is_fetching: loading } = cartReducer;
+
+	/* 
+		calculate total products price dynamicaly
+	*/
 	let total = 0;
 	const products = [];
-	let unique = [...new Set(cartReducer.productReferId)]; 
+
+	let unique = [...new Set(cartReducer.productReferId)]; // get unique product id
+
 	unique.map(function (id) {
-		const quantity = cartReducer.productReferId.filter(i => i === id).length;
-		const product = productReducer.productById[id];
-		total = total + (quantity * parseFloat(product.price)); 
+		const quantity = cartReducer.productReferId.filter(i => i === id).length; // get the quantity of product in the cart
+		const product = productReducer.productById[id]; // get product object 
+		total = total + (quantity * parseFloat(product.price)); // accumulate total price with quantity
 		products.push({
 			...product,
 			quantity
 		});
 		return id;
 	})
+
 	return {
-		err, 
+		err,
 		loading,
 		products,
 		total

@@ -4,12 +4,18 @@ import { push } from 'react-router-redux';
 
 import { message } from 'antd';
 
+/*
+	declare initial state
+*/
 const defaultState = {
 	is_fetching: false,
 	err: '',
 	productReferId: []
 };
 
+/*
+	generate action creator
+*/
 const [reset, add, request, failure, success] = [
 	'RESET_CART_ERROR',
 	'ADD_CART_ITEM',
@@ -18,6 +24,9 @@ const [reset, add, request, failure, success] = [
 	'SUBMIT_CART_SUCCESS',
 ].map(createAction);
 
+/*
+	map action with reducer
+*/
 const reducer = createReducer({
 	[reset]: (state) => {
 		return update(state, {
@@ -43,16 +52,26 @@ const reducer = createReducer({
 	}),
 }, defaultState);
 
+
+/*
+	mock submit checkout process
+*/
 function postCartData() {
 	return new Promise((res) => {
 		setTimeout(() => res('success'), 2000);
 	});
 }
 
+/*
+	export sync reducer
+*/
 export {
 	reset,
 };
 
+/*
+	add item to cart state
+*/
 export function addItemToCart (data) {
 	return (dispatch) => {
 		message.success('Item Added to Cart');
@@ -60,6 +79,9 @@ export function addItemToCart (data) {
 	} 
 }
 
+/*
+	checkout process
+*/
 export function postCartAsync () {
 	return (dispatch, getState) => {
 		const {
@@ -82,4 +104,7 @@ export function postCartAsync () {
 	}
 }
 
+/*
+	export the reducer object
+*/
 export default reducer;

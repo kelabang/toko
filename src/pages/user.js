@@ -14,7 +14,10 @@ const {
 	Content, Sider,
 } = Layout;
 
-export default function IndexPage() {
+/**
+ * User route component.
+ */
+export default function User() {
 	return (
 		<Layout style={{ minHeight: '100vh' }}>
 			<Sider

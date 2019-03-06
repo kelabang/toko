@@ -13,11 +13,11 @@ import {
 
 import CardItem from './../components/CardItem';
 
+/**
+ * ListProducts containers.
+ * Display all products
+ */
 class ListProducts extends Component {
-
-	state = {
-		collapsed: false,
-	};
 
 	componentDidMount () {
 		const {
@@ -58,10 +58,6 @@ ListProducts.propTypes = {
 	addProductToCart: PropTypes.func,
 }
 
-ListProducts.defaultProps = {
-	getProductAsync: () => {}
-}
-
 const mapStateToProps = (state) => {
 	const {
 		productReducer
@@ -69,6 +65,7 @@ const mapStateToProps = (state) => {
 
 	const { productById } = productReducer
 
+	// revert back object to array 
 	const products = Object.keys(productById || {}).map(name => productById[name]);
 
 	return {

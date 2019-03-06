@@ -10,30 +10,38 @@ import { bindActionCreators } from 'redux';
 
 const { Meta } = Card; 
 
+/**
+ * UserAuth container.
+ * Connect account user and show the profile user.
+ */
 class UserAuth extends Component {
-	responseGoogle = (resp) => {
-		window.console.log(resp);
+	_responseGoogle = (resp) => {
 		const {error} = resp;
 		const { setGoogleUser } = this.props;
 		if(!error) {
-			// lakukan dispatch
-			setGoogleUser(resp);
+			setGoogleUser(resp); // set google user to redux store
 		}
 	}
+	/**
+	 * display google login if user not found yet
+	 */
 	_renderConnect = () => {
 		return (
 			<div style={{ marginTop: 14, padding: 36, background: '#fff', minHeight: 360, border: 0 }}>
 				<Card title="Connect Your Account">
 					<GoogleLogin
-						clientId="95200833399-n2kvqo4oq2qvpfhkugegse9s3q9pgjce.apps.googleusercontent.com"
+						clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
 						buttonText="Connect with Google"
-						onSuccess={this.responseGoogle}
-						onFailure={this.responseGoogle}
+						onSuccess={this._responseGoogle}
+						onFailure={this._responseGoogle}
 					/>
 				</Card>
 			</div >
 		);
 	}
+	/**
+	 * display profile of user
+	 */
 	_renderUser = () => {
 		const {
 			user: {

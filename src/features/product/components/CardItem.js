@@ -5,6 +5,11 @@ import numbro from 'numbro';
 
 const { Meta } = Card;
 
+/**
+ * CardItem stateless component.
+ * Represent Product Item
+ * @param {object} props 
+ */
 export default function CardItem ({id, name, price, image, avatar, handleCartClick}) {
 	return (
 		<Card

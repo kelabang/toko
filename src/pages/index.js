@@ -12,6 +12,9 @@ const {
 	Content, Sider,
 } = Layout;
 
+/**
+ * IndexPage route component.
+ */
 export default function IndexPage () {
 	return (
 		<Layout style={{ minHeight: '100vh' }}>
