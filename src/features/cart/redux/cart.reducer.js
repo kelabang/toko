@@ -16,7 +16,8 @@ const defaultState = {
 /*
 	generate action creator
 */
-const [reset, add, request, failure, success] = [
+const [clear, reset, add, request, failure, success] = [
+	'clear_CART_ITEM',
 	'RESET_CART_ERROR',
 	'ADD_CART_ITEM',
 	'SUBMIT_CART_REQUEST',
@@ -28,6 +29,12 @@ const [reset, add, request, failure, success] = [
 	map action with reducer
 */
 const reducer = createReducer({
+	[clear]: (state) => {
+		return update(state, {
+			productReferId: {$set: []},
+			err: {$set: ''}
+		});
+	},
 	[reset]: (state) => {
 		return update(state, {
 			err: {$set: ''}
@@ -62,6 +69,7 @@ function postCartData() {
 	});
 }
 
+
 /*
 	export sync reducer
 */
@@ -70,11 +78,22 @@ export {
 };
 
 /*
+	clear cart 
+*/
+export function clearCart() {
+	return dispatch => {
+		message.success(`Cart has been cleared`);
+		dispatch(clear());
+	}
+}
+
+
+/*
 	add item to cart state
 */
 export function addItemToCart (data) {
 	return (dispatch) => {
-		message.success('Item Added to Cart');
+		message.success(`"${data.name}" has been added to cart`);
 		dispatch(add(data));
 	} 
 }

@@ -10,7 +10,8 @@ import { bindActionCreators } from 'redux';
 
 import {
 	postCartAsync,
-	reset
+	reset,
+	clearCart,
 } from './../redux/cart.reducer';
 
 /**
@@ -27,6 +28,7 @@ class ListCart extends Component {
 			products,
 			total,
 			postCartAsync,
+			clearCart,
 		} = this.props;
 		const templateTotal = [
 			{
@@ -53,10 +55,11 @@ class ListCart extends Component {
 						itemLayout="horizontal"
 						dataSource={templateTotal}
 						loadMore={<div style={{
-							textAlign: 'center', marginTop: 12, height: 32, lineHeight: '32px',
+							textAlign: 'right', marginTop: 12, height: 32, lineHeight: '32px',
 						}}
 						>
-							<Button onClick={postCartAsync}>Checkout</Button>
+							<Button style={{marginRight: 30}} onClick={clearCart}>Clear Cart</Button>
+							<Button type="primary" onClick={postCartAsync}>Checkout</Button>
 						</div>}
 						renderItem={item => (
 							<List.Item >
@@ -121,6 +124,7 @@ ListCart.propTypes = {
 	products: PropTypes.array,
 	total: PropTypes.number,
 	postCartAsync: PropTypes.func,
+	clearCart: PropTypes.func,
 	reset: PropTypes.func,
 	loading: PropTypes.bool,
 	history: PropTypes.object,
@@ -163,7 +167,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	postCartAsync,
-	reset
+	reset,
+	clearCart,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListCart);
